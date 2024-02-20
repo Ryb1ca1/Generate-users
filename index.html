@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Генератор случайных пользователей</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row game-card align-items-center">
+                <div class="col col-md-6 offset-md-3">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <p class="m-0">Окно результатов генерации</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h3 class="card-title">Фамилия: <span id="surnameOutput">Романов</span></h3>
+                                    <h4>Имя: <span id="firstNameOutput">Иван</span></h4>
+                                    <h4>Отчество: <span id="patronymicOutput">Викторович</span></h4>
+                                    <p>
+                                        Пол: <span id="genderOutput">Мужчина</span>
+                                        <span>, </span>
+                                        Год рождения: <span id="birthYearOutput">19 октября 2000</span>
+                                    </p>
+                                    <h4>Профессия: <span id="professionOutput">Программист</span></h4>
+                                </div>
+                            </div>
+                            <button id="generateButton" class="btn btn-primary mt-3">Сгенерировать данные</button>
+                            <button id="clearButton" class="btn btn-danger mt-3">Очистить данные</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script src="personGenerator.js"></script>
+    <script src="init.js"></script>
+    </body>
+</html>
