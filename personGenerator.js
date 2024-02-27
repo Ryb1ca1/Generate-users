@@ -51,27 +51,6 @@ const personGenerator = {
         }
     }`,
 
-    patronymicsMaleJson: `{
-        "count": 5,
-        "list": {
-            "id_1": "Иванович",
-            "id_2": "Сергеевич",
-            "id_3": "Александрович",
-            "id_4": "Михайлович",
-            "id_5": "Николаевич"
-        }
-    }`,
-    patronymicsFemaleJson: `{
-        "count": 5,
-        "list": {
-            "id_1": "Ивановна",
-            "id_2": "Сергеевна",
-            "id_3": "Александровна",
-            "id_4": "Михайловна",
-            "id_5": "Николаевна"
-        }
-    }`,
-
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
 
@@ -107,7 +86,7 @@ const personGenerator = {
 
     professionsMale: ['Инженер', 'Врач', 'Учитель', 'Программист', 'Архитектор', 'Дизайнер', 'Медбрат', 'Солдат', 'Шахтер'],
 
-    professionsFemale: ['Медсестра', 'Учительница', 'Дизайнер', 'Библиотекарь', 'Переводчица', 'Программист', 'Швея'],
+    professionsFemale: ['Медсестра', 'Учительница', 'Дизайнер', 'Библиотекарь', 'Переводчик', 'Программист', 'Швея'],
 
     randomIntNumber: (max = 1, min = 0) => Math.floor(Math.random() * (max - min + 1) + min),
 
@@ -162,12 +141,34 @@ const personGenerator = {
         return professions[randomIndex];
     },
 
-    randomPatronymic: function (gender, surname) {
+    randomPatronymic: function (gender) {
         let patronymic;
         if (gender === this.GENDER_MALE) {
-            patronymic = this.randomValue(this.patronymicsMaleJson);
+            const maleName = this.randomFirstName(this.GENDER_MALE);
+            const lastChar1 = maleName.charAt(maleName.length - 1).toLowerCase();
+            if (lastChar1 === 'й' && maleName.length > 1) {
+                suffix1 = 'евич';
+                patronymic = `${maleName.substring(0, maleName.length - 1)}${suffix1}`;
+            } else  if (lastChar1 === 'а' && maleName.length > 1) {
+                suffix1 = 'ович';
+                patronymic = `${maleName.substring(0, maleName.length - 1)}${suffix1}`
+            } else {
+                patronymic = `${maleName}ович`;
+            }
         } else if (gender === this.GENDER_FEMALE) {
-            patronymic = this.randomValue(this.patronymicsFemaleJson);
+            const femaleName = this.randomFirstName(this.GENDER_MALE); // используем мужское имя
+            const lastChar = femaleName.charAt(femaleName.length - 1).toLowerCase();
+            let suffix = 'овна';
+            if (lastChar === 'й' && femaleName.length > 1) {
+                suffix = 'евна';
+                patronymic = `${femaleName.substring(0, femaleName.length - 1)}${suffix}`;
+            } else if (lastChar === 'а' && femaleName.length > 1) {
+                patronymic = `${femaleName.substring(0, femaleName.length - 1)}${suffix}`;
+            } else {
+                patronymic = `${femaleName}${suffix}`;
+            }
+        } else {
+            patronymic = '';
         }
         return patronymic;
     },
@@ -178,7 +179,7 @@ const personGenerator = {
         this.person.gender = gender;
         this.person.firstName = this.randomFirstName(gender);
         this.person.surname = this.randomSurname(gender);
-        this.person.patronymic = this.randomPatronymic(gender, this.person.surname);
+        this.person.patronymic = this.randomPatronymic(gender);
         this.person.birthYear = this.randomBirthYear();
         this.person.birthMonth = this.randomBirthMonth();
         this.person.birthDay = this.randomBirthDay(this.person.birthMonth);
